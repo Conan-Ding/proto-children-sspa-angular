@@ -1,0 +1,12 @@
+<div>
+    <h2>Inbox</h2>
+    <ul>
+        <li *ngFor="let mail of mailList">
+            <p>{{mail.from}}</p>
+            <p>{{mail.title}}</p>
+            <p>{{mail.date}}</p>
+            <a [routerLink]="['/detail', mail.id]">See Detail</a>
+            <span>Del</span>
+        </li>
+    </ul>
+</div>
