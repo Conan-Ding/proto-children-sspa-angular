@@ -1,4 +1,12 @@
 <div>
-    <a routerLink="/inbox">Inbox</a>
-    <a href="http://localhost:9000/app1">App1</a>
+  <header class="home-page-header">
+    <div class="header-left">
+      Welcome {{ username }} , please check <a routerLink="/inbox">Inbox</a>
+    </div>
+    <div class="header-right">
+      <button class="update-user-btn" (click)="updateStore()">
+        Change User Name</button
+      ><a href="http://localhost:9000/app1">App1</a>
+    </div>
+  </header>
 </div>
