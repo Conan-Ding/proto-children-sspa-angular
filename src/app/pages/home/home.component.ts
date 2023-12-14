@@ -1,16 +1,27 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Input,
+} from '@angular/core';
 import { loadRemoteModule } from '@angular-architects/module-federation';
-import { autorun } from 'mobx';
 
 @Component({
   selector: 'home',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private cd: ChangeDetectorRef) {}
-  username = '';
+
   store: any;
+  username: string;
+  _newName: string;
+  constructor(private cdr: ChangeDetectorRef) {
+    this.username = '';
+    this._newName = '';
+  }
 
   async ngOnInit() {
     const remoteModule = await loadRemoteModule({
@@ -19,18 +30,19 @@ export class HomeComponent implements OnInit {
       exposedModule: './CentralStore',
     });
     this.store = remoteModule.default;
-    this.username = this.store.username;
-
-    autorun(() => {
-      this.username = this.store.username;
-      this.cd.detectChanges(); // Manually trigger Angular's change detection
-    });
-    console.log(this.store);
-    // Now you can use GlobalStore in your Angular application
+    this.username = this.store.getData().username;
+    this.cdr.detectChanges();
   }
+
+  onNewNameKey(event: any) {
+    this._newName = event.target.value;
+  }
+
   updateStore() {
     this.store.setData({
-      username: 'John Doe',
+      username: this._newName,
     });
+    this.username = this.store.getData().username;
+    this.cdr.detectChanges();
   }
 }

@@ -1,0 +1,7 @@
+{
+  "presets": ["angular"],
+  "plugins": [["@babel/plugin-proposal-class-properties"]],
+  "assumptions": {
+    "setPublicClassFields": false
+  }
+}
