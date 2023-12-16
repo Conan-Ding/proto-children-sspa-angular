@@ -3,7 +3,6 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input,
 } from '@angular/core';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 
